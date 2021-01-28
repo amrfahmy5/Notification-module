@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>
+
+        function sendForm() {
+            productname = document.getElementById("login_form").elements[0].value;
+            productnumber = document.getElementById("login_form").elements[1].value;
+            const data = { "T_Notfication": 2, "tID": 1, "productName": productname,"productID": productnumber};
+            const myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            fetch('http://localhost:8001/book', {
+                method: 'POST', // or 'PUT'
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default',
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert(data)
+                    //document.cookie = `user=${username}`;
+                    //window.location.replace("http://localhost:8001/booking");
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+</head>
+
+<body>
+    <form id="login_form" onsubmit="return sendForm()">
+        <div class="group"> <label for="user" class="label">product name</label> <input id="user" type="text"
+                class="input" placeholder="Enter product name">
+        </div>
+        <div class="group"> <label for="pass" class="label">product id</label> <input id="pass" type="number"
+                class="input" data-type="password" placeholder="Enter product id"> </div>
+        <div class="group"> <input type="submit" class="button" value="Book"> </div>
+    </form>
+
+</body>
+
+</html>
